@@ -16,7 +16,7 @@ function buildInfographic(sample) {
     });
   }
 
-
+//Plot building
 function buildPlots(sample) {
 
   // Use `d3.json` to fetch the sample data for the plots
@@ -24,7 +24,6 @@ function buildPlots(sample) {
     var samples= data.samples;
     var resultsarray= samples.filter(sampleobject => sampleobject.id == sample);
     var result= resultsarray[0]
-
     var ids = result.otu_ids;
     // console.log(ids)
     var labels = result.otu_labels;
@@ -56,7 +55,7 @@ function buildPlots(sample) {
 
     Plotly.newPlot("bubble", bubble_data, bubble_layout);
 
-    //  Build a bar Chart
+    //  building bar chart
     
     var bar_data =[
       {
@@ -81,10 +80,10 @@ function buildPlots(sample) {
    
  
 function init() {
-  // Grab a reference to the dropdown select element
+  // tie to dropdown seclect element
   var selector = d3.select("#selDataset");
 
-  // Use the list of sample names to populate the select options
+  // populate drop down from list of subjects
   d3.json("samples.json").then((data) => {
     var sampleNames = data.names;
     sampleNames.forEach((sample) => {
@@ -94,7 +93,7 @@ function init() {
         .property("value", sample);
     });
 
-    // Use the first sample from the list to build the initial plots
+    // populate initial plot with first subject data
     const firstSample = sampleNames[0];
     buildPlots(firstSample);
     buildInfographic(firstSample);
@@ -102,7 +101,7 @@ function init() {
   }
 
 function optionChanged(newSample) {
-  // Fetch new data each time a new sample is selected
+  // poplulate info and plots with new subject
   buildPlots(newSample);
   buildInfographic(newSample);
 }
